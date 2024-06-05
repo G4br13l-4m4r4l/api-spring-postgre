@@ -11,6 +11,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/products")
@@ -26,10 +28,10 @@ public class ProductController {
             return ResponseEntity.status(HttpStatus.OK).body(productRepository.findAll());
         }
     }
-    /*@GetMapping("/{name:String}")
-    public ResponseEntity<ProductModel> getProductById(@PathVariable String name) {
-
-    }*/
+    @GetMapping("/{id}")
+    public ResponseEntity<Optional<ProductModel>> getProductById(@PathVariable UUID id) {
+        return ResponseEntity.status(HttpStatus.OK).body(productRepository.findById(id));
+    }
 
     @PostMapping("/cadastrar")
     public ResponseEntity<ProductModel> saveProduct(@RequestBody @Valid ProductRecordDto productRecordDto) {
